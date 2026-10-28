@@ -26,6 +26,6 @@ data class Album(
 ) {
     //MÉTODO PARA OBTENER LA IMAGEN EN GRANDE
     fun obtenerImagenGrande(): String {
-        return artworkUrl100?.replace("100x100db.jpg", "600x600dp.jpg" ) ?: ""
+        return artworkUrl100?.replace("100x100bb.jpg", "600x600bb.jpg" ) ?: ""
     }
 }
