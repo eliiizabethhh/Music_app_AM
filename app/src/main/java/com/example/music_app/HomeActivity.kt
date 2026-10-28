@@ -43,17 +43,32 @@ class HomeActivity : AppCompatActivity() {
             entidad = "album",
             limite = 1,
         ).enqueue(object : Callback<ITunesResponse>{
-
+            //MÉTODO PARA VERIFICAR QUE LA RESPUESTA SEA CORRECTA
             override fun onResponse(
                 call: Call<ITunesResponse>,
                 response: Response<ITunesResponse>
             ) {
 
-                Toast.makeText(this@HomeActivity, "Hola", Toast.LENGTH_SHORT).show()
+                //variable que obtenga los resultados del appi
+                val albumes = response.body()?.results
+
+                if(!albumes.isNullOrEmpty()){
+                    //VARIABLE QUE GUARDE LA INFORMACIÓN DE CADA RESPUESTA OBTENIDA DEL API
+                    val album = albumes[0]
+                    //MOSTRAR INFORMACION DEL API
+                    tvResultado.text="Nombre del album: ${album.collectionName} \n\n" +
+                                     "Artista: ${album.artistName}"
+                    //MOSTRAR IMAGEN EN EL API
+                    Glide.with(this@HomeActivity)
+                        .load(album.obtenerImagenGrande())
+                        .into(imgAlbum)
+                } else {
+                    Toast.makeText(this@HomeActivity, "No hay resultados", Toast.LENGTH_SHORT).show()
+                }
 
 
             }
-
+             //MÉTODO PARA IDENTIFICAR SI NO HAY RESPUESTA
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
                 Toast.makeText(this@HomeActivity, "Error en el API", Toast.LENGTH_SHORT).show()
             }
