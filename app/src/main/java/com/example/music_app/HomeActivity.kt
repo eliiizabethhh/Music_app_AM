@@ -17,63 +17,115 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
-
-    private lateinit var tvResultado : TextView
-    private lateinit var imgAlbum : ImageView
+    private lateinit var tvPop: TextView
+    private lateinit var imgPop: ImageView
+    private lateinit var tvRock: TextView
+    private lateinit var imgRock: ImageView
+    private lateinit var tvReggaeton: TextView
+    private lateinit var imgReggaeton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
 
-        tvResultado = findViewById(R.id.tvResultado)
-        imgAlbum = findViewById(R.id.imgAlbum)
+        tvPop = findViewById(R.id.tvPop)
+        imgPop = findViewById(R.id.imgPop)
 
-        obtenerAlbum()
+        tvRock = findViewById(R.id.tvRock)
+        imgRock = findViewById(R.id.imgRock)
+
+        tvReggaeton = findViewById(R.id.tvReggaeton)
+        imgReggaeton = findViewById(R.id.imgReggaeton)
+
+
+        obtenerAlbumGenero("pop", imgPop, tvPop)
+
+        obtenerAlbumGenero("rock", imgRock, tvRock)
+
+        obtenerAlbumGenero("reggaeton", imgReggaeton, tvReggaeton)
     }
 
 
-    //MÉTODO PARA CARGAR LOS ALBUMES
-    private fun obtenerAlbum(){
+    // METODO PARA CONSULTAR ALBUMES POR GENERO
+
+    private fun obtenerAlbumGenero(
+        genero: String,
+        imagen: ImageView,
+        resultado: TextView
+    ) {
 
         RetrofitClient.api.obtenerAlbumGenero(
-            genero = "pop",
+            genero = genero,
             pais = "MX",
             media = "music",
             entidad = "album",
-            limite = 1,
-        ).enqueue(object : Callback<ITunesResponse>{
-            //MÉTODO PARA VERIFICAR QUE LA RESPUESTA SEA CORRECTA
+            limite = 10
+        ).enqueue(object : Callback<ITunesResponse> {
+
+            // METODO PARA RECIBIR LA RESPUESTA DEL API
+
             override fun onResponse(
                 call: Call<ITunesResponse>,
                 response: Response<ITunesResponse>
             ) {
 
-                //variable que obtenga los resultados del appi
-                val albumes = response.body()?.results
+                if (response.isSuccessful) {
 
-                if(!albumes.isNullOrEmpty()){
-                    //VARIABLE QUE GUARDE LA INFORMACIÓN DE CADA RESPUESTA OBTENIDA DEL API
-                    val album = albumes[0]
-                    //MOSTRAR INFORMACION DEL API
-                    tvResultado.text="Nombre del album: ${album.collectionName} \n\n" +
-                                     "Artista: ${album.artistName}"
-                    //MOSTRAR IMAGEN EN EL API
-                    Glide.with(this@HomeActivity)
-                        .load(album.obtenerImagenGrande())
-                        .into(imgAlbum)
+                    val albumes = response.body()?.results
+
+                    if (!albumes.isNullOrEmpty()) {
+
+                        // OBTENER EL PRIMER ALBUM DE LA RESPUESTA
+
+                        val album = albumes[0]
+
+                        // MOSTRAR LA INFORMACION DEL ALBUM
+
+                        resultado.text =
+                            "Álbum: ${album.collectionName}\n" +
+                                    "Artista: ${album.artistName}\n" +
+                                    "Género: ${album.primaryGenreName}"
+
+                        // CARGAR LA PORTADA CON GLIDE
+
+                        Glide.with(this@HomeActivity)
+                            .load(album.obtenerImagenGrande())
+                            .into(imagen)
+
+                    } else {
+
+                        resultado.text = "No se encontraron álbumes de $genero"
+
+                    }
+
                 } else {
-                    Toast.makeText(this@HomeActivity, "No hay resultados", Toast.LENGTH_SHORT).show()
+
+                    resultado.text = "Error en la consulta: ${response.code()}"
+
                 }
-
-
             }
-             //MÉTODO PARA IDENTIFICAR SI NO HAY RESPUESTA
-            override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
-                Toast.makeText(this@HomeActivity, "Error en el API", Toast.LENGTH_SHORT).show()
+
+
+            // METODO PARA IDENTIFICAR ERRORES DE CONEXION
+
+            override fun onFailure(
+                call: Call<ITunesResponse>,
+                t: Throwable
+            ) {
+
+                resultado.text = "Error de conexión al consultar $genero"
+
+                Toast.makeText(
+                    this@HomeActivity,
+                    "Error en el API",
+                    Toast.LENGTH_SHORT
+                ).show()
+
             }
 
         })
+
     }
 
 }

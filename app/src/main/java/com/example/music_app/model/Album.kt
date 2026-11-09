@@ -1,7 +1,5 @@
 package com.example.music_app.model
 
-
-//ARCHIVO QUE MANEJA LOS DATOS PROVENIENTES DEL API
 data class Album(
     val wrapperType: String?,
     val collectionType: String?,
@@ -24,7 +22,6 @@ data class Album(
     val country: String?,
     val currency: String?
 ) {
-    //MÉTODO PARA OBTENER LA IMAGEN EN GRANDE
     fun obtenerImagenGrande(): String {
         return artworkUrl100?.replace("100x100bb.jpg", "600x600bb.jpg" ) ?: ""
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#101818"
+        android:fillViewport="true"
         android:padding="20dp">
 
         <LinearLayout
@@ -21,21 +23,105 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvResultado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="MUSIC DISCOVERY"
                 android:textColor="#FFFFFF"
-                android:text="Cargando Prueba de API"
-                android:textSize="20sp"/>
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Explora tus géneros favoritos"
+                android:textColor="#AABBBB"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="25dp"/>
+
+            <!-- POP -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="POP"
+                android:textColor="#E53935"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
 
             <ImageView
-                android:id="@+id/imgAlbum"
-                android:layout_width="240dp"
-                android:layout_height="240dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:scaleType="centerCrop"
-                />
+                android:id="@+id/imgPop"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvPop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cargando álbumes..."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="25dp" />
+
+            <!-- ROCK -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ROCK"
+                android:textColor="#E53935"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/imgRock"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvRock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cargando álbumes..."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="25dp"/>
+
+            <!-- REGGAETON -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REGGAETÓN"
+                android:textColor="#E53935"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/imgReggaeton"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvReggaeton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cargando álbumes..."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="25dp"/>
+
 
         </LinearLayout>
     </ScrollView>

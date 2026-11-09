@@ -19,5 +19,4 @@ interface ITunesApi {
         @Query("limit") limite : Int,
     ) : retrofit2.Call<ITunesResponse>
 
-
 }
